@@ -3,6 +3,7 @@ import Form from "./components/Form";
 import Logo from "./components/Logo";
 import PackingList from "./components/PackingList";
 import Item from "./components/Item";
+import Stats from "./components/Stats";
 
 function App() {
   const [allItems, setAllItems] = useState([]);
@@ -58,6 +59,10 @@ function App() {
           <Item key={item.id} item={item} onChange={handleChange} />
         ))}
       </PackingList>
+      <Stats
+        totalLength={allItems.length}
+        totalPacked={allItems.filter((i) => i.packed === true).length}
+      />
     </div>
   );
 }

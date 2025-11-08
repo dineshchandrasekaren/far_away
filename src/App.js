@@ -16,20 +16,29 @@ function App() {
   const handleChange = ({ target }) => {
     const { id, dataset } = target;
     const itemId = parseInt(id);
-    setAllItems((prev) => {
-      if (dataset.mode === "mark") {
-        return prev.map((item) => {
-          if (item.id === itemId) {
-            return { ...item, packed: !item.packed };
-          } else {
-            return item;
-          }
-        });
-      } else if (dataset === "delete") {
-        return prev.filter((item) => item.id !== itemId);
-      }
-    });
+    setAllItems((prev) =>
+      dataset.mode === "mark"
+        ? prev.map((item) => {
+            if (item.id === itemId) {
+              return { ...item, packed: !item.packed };
+            } else {
+              return item;
+            }
+          })
+        : prev.filter((item) => item.id !== itemId)
+    );
+    console.log(allItems);
   };
+
+  const filteredItem = sortBy
+    ? allItems.sort((a, b) => {
+        if (sortBy === 1) {
+          return a.name[0].charCodeAt() - b.name[0].charCodeAt();
+        } else if (sortBy === 2) {
+          return a.packed - b.packed;
+        }
+      })
+    : allItems;
   return (
     <div className="app">
       <Logo />
@@ -39,13 +48,13 @@ function App() {
           setSortBy(parseInt(target.value));
         }}
         handleClear={() => {
-          const isClear = prompt("Are you sure to clear the list?");
+          const isClear = window.confirm("Are you sure to clear the list?");
           if (isClear) {
             setSortBy(0);
           }
         }}
       >
-        {allItems.map((item) => (
+        {filteredItem.map((item) => (
           <Item key={item.id} item={item} onChange={handleChange} />
         ))}
       </PackingList>

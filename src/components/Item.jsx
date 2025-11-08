@@ -12,7 +12,7 @@ const Item = ({ item, onChange }) => {
       />
       <span>{item.count}</span>
       <label htmlFor={item.id}>{item.name}</label>
-      <button id={item.id} onClick={onChange} data-mode="delete">
+      <button id={item.id} onClick={onChange}>
         ❌
       </button>
     </li>

@@ -31,11 +31,13 @@ function App() {
   };
 
   const filteredItem = sortBy
-    ? allItems.sort((a, b) => {
+    ? allItems.sort(function (a, b) {
         if (sortBy === 1) {
           return a.name[0].charCodeAt() - b.name[0].charCodeAt();
         } else if (sortBy === 2) {
           return a.packed - b.packed;
+        } else {
+          return 0;
         }
       })
     : allItems;
